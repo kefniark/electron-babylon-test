@@ -1,9 +1,10 @@
-sudo: false
-
+os: osx
+osx_image: xcode9.3
 language: node_js
-
-node_js:
-- 10
+node_js: "10"
+env:
+  - ELECTRON_CACHE=$HOME/.cache/electron
+  - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 
 cache:
   directories:
@@ -15,20 +16,6 @@ cache:
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine
 
-matrix:
-  include:
-    - os: osx
-      osx_image: xcode9.3
-      language: node_js
-      node_js: "10"
-      env:
-        - ELECTRON_CACHE=$HOME/.cache/electron
-        - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
-
-    - os: linux
-      language: node_js
-      node_js: "10"
-
 stages:
   - test
   - name: build
@@ -36,11 +23,25 @@ stages:
 
 jobs:
   include:
+    - stage: install
+      script:
+        - npm install
+        - npm run build
     - stage: test
       script: npm run test
-    - stage: build
+    - stage: compile
       script:
-        - yarn package
+        - npm run package-linux-mac
+    - stage: deploy
+      before_deploy:
+      # Set up git user name and tag this commit
+      - git config --local user.name "Travis CI"
+      - git config --local user.email "ci@test.com"
+      - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+      deploy:
+        provider: releases
+        api_key: $GITHUB_OAUTH_TOKEN
+        skip_cleanup: true
 
 branches:
   except:

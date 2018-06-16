@@ -20,7 +20,7 @@ module.exports = {
   },
 
   output: {
-    path: path.join(__dirname, 'app'),
+    path: path.join(process.cwd(), 'app'),
     filename: 'bundle.js',
 
     // https://github.com/webpack/webpack/issues/1114
@@ -31,7 +31,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.ts', '.tsx', '.json'],
     modules: [
-      path.join(__dirname, 'app'),
+      path.join(process.cwd(), 'app'),
       'node_modules',
     ]
   },

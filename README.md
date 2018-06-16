@@ -22,3 +22,7 @@ For building
 ```
 npm run package
 ```
+
+## CI
+
+Integration with **Travis-CI** & **AppVeyor**
