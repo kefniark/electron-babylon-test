@@ -11,21 +11,19 @@ cache:
   - $HOME/.cache/electron-builder
 
 stages:
-  - install
   - test
-  - compile
+  - build
     if: branch = master
   - name: deploy
     if: branch = master
 
 jobs:
   include:
-    - stage: install
+    - stage: test
       script:
         - npm install
-    - stage: test
-      script: npm run test
-    - stage: compile
+        - npm run test
+    - stage: build
       script:
         - npm run package-linux-mac
     - stage: deploy
@@ -38,6 +36,8 @@ jobs:
         provider: releases
         api_key: $GITHUB_OAUTH_TOKEN
         skip_cleanup: true
+        file_glob: true
+        file: release/**/*
 
 branches:
   except:

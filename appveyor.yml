@@ -1,10 +1,15 @@
-image: Visual Studio 2015
+image: Visual Studio 2017
+
+branches:
+  only:
+    - master
 
 platform:
   - x64
 
 cache:
   - node_modules
+  - app\node_modules
   - '%USERPROFILE%\.electron'
 
 init:
@@ -12,9 +17,24 @@ init:
 
 install:
   - ps: Install-Product node 10 x64
-  - yarn
+  - npm install
 
 build_script:
-  - yarn package-win
+  - npm run package-win
 
 test: off
+
+artifacts:
+  - path: 'release'
+    name: 'release'
+
+deploy:
+  - provider: GitHub
+    auth_token:
+      secure: tUBVzMxbYnfHaSnnZtUvsBeYW841YyYAqdB4vQvngbKh2ddES4VzZ1X5Dc3vaprs
+    artifact: 'release'
+    draft: false
+    prerelease: false
+    force_update: true
+    on:
+      branch: master
