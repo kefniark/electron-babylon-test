@@ -173,7 +173,7 @@ export class Game extends React.Component {
 
             (window as any).camera = camera;
             scene.actionManager = new BABYLON.ActionManager(scene);
-            scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, function (evt) {								
+            scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, function (evt: BABYLON.ActionEvent) {
                 switch (evt.sourceEvent.key) {
                     case "ArrowUp":
                     case "w":
