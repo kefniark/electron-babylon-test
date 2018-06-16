@@ -2,9 +2,6 @@ os: osx
 osx_image: xcode9.3
 language: node_js
 node_js: "10"
-env:
-  - ELECTRON_CACHE=$HOME/.cache/electron
-  - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 
 cache:
   directories:
@@ -13,12 +10,12 @@ cache:
   - $HOME/.cache/electron
   - $HOME/.cache/electron-builder
 
-before_cache:
-  - rm -rf $HOME/.cache/electron-builder/wine
-
 stages:
+  - install
   - test
-  - name: build
+  - compile
+    if: branch = master
+  - name: deploy
     if: branch = master
 
 jobs:
@@ -26,7 +23,6 @@ jobs:
     - stage: install
       script:
         - npm install
-        - npm run build
     - stage: test
       script: npm run test
     - stage: compile
