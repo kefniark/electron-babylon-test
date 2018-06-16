@@ -4,6 +4,8 @@ branches:
   only:
     - master
 
+skip_tags: true
+
 platform:
   - x64
 

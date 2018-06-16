@@ -12,10 +12,11 @@ cache:
 
 stages:
   - test
+    if: tag IS blank
   - build
-    if: branch = master
-  - name: deploy
-    if: branch = master
+    if: branch = master AND tag IS blank
+  - deploy
+    if: branch = master AND tag IS blank
 
 jobs:
   include:
@@ -38,7 +39,3 @@ jobs:
         skip_cleanup: true
         file_glob: true
         file: release/**/*
-
-branches:
-  except:
-    - "/^v\\d+\\.\\d+\\.\\d+$/"

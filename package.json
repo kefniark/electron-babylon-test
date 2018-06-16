@@ -44,11 +44,11 @@
       "package.json"
     ],
     "directories": {
-      "buildResources": "assets",
+      "buildResources": "resources",
       "output": "release"
     },
     "win": {
-      "target": "nsis"
+      "target": "portable"
     },
     "linux": {
       "target": [
