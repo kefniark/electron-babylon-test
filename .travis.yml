@@ -15,9 +15,9 @@ cache:
   - $HOME/.cache/electron-builder
 
 stages:
-  - test
+  - name: test
     if: tag IS blank
-  - build
+  - name: package
     if: branch = master AND tag IS blank
 
 jobs:
@@ -26,6 +26,5 @@ jobs:
       script:
         - npm install
         - npm run test
-    - stage: build
-      script:
-        - npm run package-linux-mac
+    - stage: package
+      script: npm run package-linux-mac
