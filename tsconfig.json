@@ -26,6 +26,9 @@
 
     "outDir": "dist"
   },
+  "types": [
+    "babylonjs"
+  ],
   "files": [
     "app/index.tsx"
   ],
