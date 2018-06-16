@@ -19,8 +19,6 @@ stages:
     if: tag IS blank
   - build
     if: branch = master AND tag IS blank
-  - deploy
-    if: branch = master AND tag IS blank
 
 jobs:
   include:
@@ -31,15 +29,3 @@ jobs:
     - stage: build
       script:
         - npm run package-linux-mac
-    - stage: deploy
-      before_deploy:
-      # Set up git user name and tag this commit
-      - git config --local user.name "Travis CI"
-      - git config --local user.email "ci@test.com"
-      - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
-      deploy:
-        provider: releases
-        api_key: $GITHUB_OAUTH_TOKEN
-        skip_cleanup: true
-        file_glob: true
-        file: release/**/*
