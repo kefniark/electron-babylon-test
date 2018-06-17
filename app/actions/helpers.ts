@@ -34,3 +34,19 @@ export const actionCreatorVoid = (type: string): IActionCreatorVoid =>
       return action.type === type;
     }
   });
+
+export function getStaticPath(file: string) {
+  const {app} = require('electron').remote;
+  const path =  require('path');
+
+  let rootFolder = "";
+  if (process.env.NODE_ENV === 'development') {
+    rootFolder = path.join(process.cwd(), 'app/assets');
+  } else if (app.getAppPath().endsWith("app")) {
+    rootFolder = path.join(app.getAppPath(), './assets/');
+  } else {
+    rootFolder = path.join(__dirname, 'assets/');
+  }
+
+  return path.join(rootFolder, file);
+}

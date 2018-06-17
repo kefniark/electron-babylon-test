@@ -36,6 +36,8 @@
       ]
     },
     "files": [
+      "assets/",
+      "libs/",
       "dist/",
       "node_modules/",
       "app.html",

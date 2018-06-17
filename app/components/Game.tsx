@@ -1,6 +1,5 @@
 import React = require("react");
-import * as BABYLON from 'babylonjs';
-import * as Fatina from 'fatina';
+import { getStaticPath } from "../actions/helpers";
 
 let styles = require('./Game.scss');
 
@@ -80,25 +79,26 @@ export class Game extends React.Component {
             ];
 
             var groundMat = new BABYLON.StandardMaterial("myMaterial", scene);
-            groundMat.diffuseTexture = new BABYLON.Texture("assets/textures/Ground/GroundForest003_COL_VAR1_1K.jpg", scene);
+
+            groundMat.diffuseTexture = new BABYLON.Texture(getStaticPath("textures/Ground/GroundForest003_COL_VAR1_1K.jpg"), scene);
             (groundMat.diffuseTexture as any).uScale = grid.length / 2;
             (groundMat.diffuseTexture as any).vScale = grid.length / 2;
-            groundMat.bumpTexture = new BABYLON.Texture("assets/textures/Ground/GroundForest003_NRM_1K.jpg", scene);
+            groundMat.bumpTexture = new BABYLON.Texture(getStaticPath("textures/Ground/GroundForest003_NRM_1K.jpg"), scene);
             (groundMat.bumpTexture as any).uScale = grid.length / 2;
             (groundMat.bumpTexture as any).vScale = grid.length / 2;
-            groundMat.specularTexture = new BABYLON.Texture("assets/textures/Ground/GroundForest003_GLOSS_1K.jpg", scene);
+            groundMat.specularTexture = new BABYLON.Texture(getStaticPath("textures/Ground/GroundForest003_GLOSS_1K.jpg"), scene);
             (groundMat.specularTexture as any).uScale = grid.length / 2;
             (groundMat.specularTexture as any).vScale = grid.length / 2;
-            groundMat.reflectionTexture = new BABYLON.Texture("assets/textures/Ground/GroundForest003_REFL_1K.jpg", scene);
+            groundMat.reflectionTexture = new BABYLON.Texture(getStaticPath("textures/Ground/GroundForest003_REFL_1K.jpg"), scene);
             (groundMat.specularTexture as any).uScale = grid.length / 2;
             (groundMat.specularTexture as any).vScale = grid.length / 2;
 
             var wallMat = new BABYLON.StandardMaterial("myMaterial", scene);
-            wallMat.diffuseTexture = new BABYLON.Texture("assets/textures/Wall/Bricks01_COL_VAR1_1K.jpg", scene);
-            wallMat.bumpTexture = new BABYLON.Texture("assets/textures/Wall/Bricks01_NRM_1K.jpg", scene);
-            wallMat.specularTexture = new BABYLON.Texture("assets/textures/Wall/Bricks01_GLOSS_1K.jpg", scene);
+            wallMat.diffuseTexture = new BABYLON.Texture(getStaticPath("textures/Wall/Bricks01_COL_VAR1_1K.jpg"), scene);
+            wallMat.bumpTexture = new BABYLON.Texture(getStaticPath("textures/Wall/Bricks01_NRM_1K.jpg"), scene);
+            wallMat.specularTexture = new BABYLON.Texture(getStaticPath("textures/Wall/Bricks01_GLOSS_1K.jpg"), scene);
             wallMat.useParallax = true;
-            wallMat.reflectionTexture = new BABYLON.Texture("assets/textures/Wall/Bricks01_REFL_1K.jpg", scene);
+            wallMat.reflectionTexture = new BABYLON.Texture(getStaticPath("textures/Wall/Bricks01_REFL_1K.jpg"), scene);
 
             var lightAmbiant = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(5, 5, -5), scene);
             lightAmbiant.intensity = 0.3;
@@ -139,7 +139,7 @@ export class Game extends React.Component {
                             box.position.y = size / 2;
                             box.position.z = getY(y);
                             box.material = wallMat;
-                            box.applyDisplacementMap("assets/textures/Ground/GroundForest003_DISP_1K.jpg", 0, 5);
+                            box.applyDisplacementMap(getStaticPath("textures/Ground/GroundForest003_DISP_1K.jpg"), 0, 5);
                             break;
                         case 2:
                             player.x = x;
@@ -160,7 +160,7 @@ export class Game extends React.Component {
             ground.material = groundMat;
             ground.receiveShadows = true;
             ground.position.y = -0.01;
-            ground.applyDisplacementMap("assets/textures/Wall/Bricks01_DISP_1K.jpg", -100, 100);
+            ground.applyDisplacementMap(getStaticPath("textures/Wall/Bricks01_DISP_1K.jpg"), -100, 100);
             // ground.enableEdgesRendering(1-0.000000000000001);	
 		    // ground.edgesWidth = 16;
             // ground.edgesColor = new BABYLON.Color4(0, 0, 1, 1);
@@ -169,11 +169,11 @@ export class Game extends React.Component {
             ceiling.material = groundMat;
             ceiling.position.y = size;
             ceiling.rotation.z = Math.PI;
-            ground.applyDisplacementMap("assets/textures/Ground/GroundForest003_DISP_1K.jpg", 0, 5);
+            ground.applyDisplacementMap(getStaticPath("textures/Ground/GroundForest003_DISP_1K.jpg"), 0, 5);
 
             (window as any).camera = camera;
             scene.actionManager = new BABYLON.ActionManager(scene);
-            scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, function (evt: BABYLON.ActionEvent) {
+            scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, function (evt: any) {
                 switch (evt.sourceEvent.key) {
                     case "ArrowUp":
                     case "w":
