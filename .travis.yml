@@ -23,7 +23,12 @@ jobs:
         - npm install
         - npm run test
     - stage: package
-      script: npm run package-linux-mac    
+      script:
+        - npm run package-linux-mac    
+        - echo $TRAVIS_BRANCH
+        - echo $TRAVIS_TAG
+        - echo $TRAVIS_COMMIT
+        - echo $TRAVIS_PULL_REQUEST_BRANCH
       deploy:
         provider: releases
         api_key: $GITHUB_OAUTH_TOKEN
